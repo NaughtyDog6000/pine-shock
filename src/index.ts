@@ -8,6 +8,8 @@ const client = new Client({
 });
 
 client.once("ready", () => {
+    console.log("Discord bot is starting...");
+        
     console.log("Discord bot is ready! 🤖");
 });
 
@@ -25,5 +27,7 @@ client.on("interactionCreate", async (interaction) => {
     }
 });
 
-  
+console.log("Invite link: https://discord.com/api/oauth2/authorize?client_id=" + config.DISCORD_CLIENT_ID + "&permissions=139788143680&scope=bot%20applications.commands");
+deployCommands({ guildId: config.TEST_GUILD_ID! });
+
 client.login(config.DISCORD_TOKEN);
