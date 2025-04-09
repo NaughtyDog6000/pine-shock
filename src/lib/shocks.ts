@@ -20,8 +20,31 @@ export default async function addShock(userId: string, amount: number, reason: s
     if (userOnline) {
         const res = await tryCatch<{ success: boolean }>(async () => {
             // Simulate a network request or some async operation
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            return { success: true, };
+            const res = await fetch("https://api.openshock.app/2/shockers/control", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "OpenShockToken": config.OPENSHOCK_KEY!,
+                },
+                body: JSON.stringify({
+                  "shocks": [
+                    {
+                        "id": "bf721915-a685-4d09-be83-627cf11b8939", // !TODO!: replace hard coded shock id
+                        "type": "Shock",
+                        "intensity": "10",
+                        "duration": "300",
+                        "exclusive": true
+                    }
+                ],
+                "customName": "RobCo Shocks"
+                }),
+              })
+              if (!res.ok) {
+                throw new Error("Failed to shock user");
+              }
+              const data = await res.json();
+
+            return data;
         }, "Shock User")
 
         if (res.error) {
