@@ -3,7 +3,11 @@ import { deployCommands } from "./scripts/deploy-commands";
 import { commands } from "./commands";
 import { config } from "./config";
 
-const client = new Client({
+// --- Data Storage (In-Memory) ---
+// Replace with a database for persistence!
+export const userShocks = new Map<string, number>(); // <userId, score>
+
+export const client = new Client({
   intents: ["Guilds", "GuildMessages", "DirectMessages"],
 });
 
